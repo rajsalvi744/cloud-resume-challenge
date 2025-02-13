@@ -1,0 +1,6 @@
+
+*.iml
+*.txt
+.vscode
+.idea
+__*

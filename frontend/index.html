@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--[if lt IE 8 ]><html class="no-js ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="no-js ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 8)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+    <!--- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Raj's Azure Resume</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/media-queries.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <!-- Script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+    <script src="scripts/vistorCounter.js"></script>
+
+    <!-- Favicons
+     ================================================== -->
+    <link rel="shortcut icon" href="favicon.png" >
+
+</head>
+
+<body>
+
+    <form id="visitorForm" action="/submit" method="POST">
+        <button class="g-recaptcha" 
+                data-sitekey="YOUR_SITE_KEY" 
+                data-callback="onSubmit" 
+                data-size="invisible">
+            Submit
+        </button>
+    </form>
+
+<!-- Header
+================================================== -->
+<header id="home">
+
+    <nav id="nav-wrap">
+
+        <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
+        <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
+
+        <ul id="nav" class="nav">
+            <li class="current"><a class="smoothscroll" href="#home">Home</a></li>
+            <li><a class="smoothscroll" href="#about">About</a></li>
+            <li><a class="smoothscroll" href="#resume">Resume</a></li>
+        </ul> <!-- end #nav -->
+
+    </nav> <!-- end #nav-wrap -->
+
+    <div class="row banner">
+        <div class="banner-text">
+            <h1 class="responsive-headline">Hi, I'm Raj</h1>
+
+            <p>and this page has been viewed <a id="visitor-count"></a> times :) </p>
+            <ul class="social">
+                <li><a href="mailto:salviraj123@outlook.com"><i class="fa fa-external-link"></i></a></li>
+                <li><a href="https://linkedin.com/in/raj-salvi123"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="https://github.com/rajsalvi744"><i class="fa fa-github"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="scrolldown">
+        <a class="smoothscroll" href="#about"><i class="icon-down-circle"></i></a>
+    </p>
+
+</header> <!-- Header End -->
+
+
+
+<!-- About Section
+================================================== -->
+<section id="about">
+
+    
+    <div class="row">
+
+        <div class="three columns">
+            <img src="images/profile.jpg" alt="Your Name" width="200">
+        </div>
+
+        <div class="nine columns main-col">
+
+            <h2>ABOUT ME</h2>
+
+            <a> A detail-oriented and driven technology enthusiast with a solid foundation in DevOps and data engineering.
+                Proven ability to design scalable systems, automate processes, and contribute to cross-functional teams.
+                Adept at leveraging emerging technologies to address real-world challenges and committed to continuous learning and improvement.</a></span>.
+
+            </br>
+            </br>
+            I built this page as part of the <span><a href="https://github.com/rajsalvi744/azure-resume">Cloud Azure Resume Challenge.</a></span>
+
+
+        </div> <!-- end .main-col -->
+
+    </div>
+
+</section> <!-- About Section End-->
+
+<!-- Resume Section
+================================================== -->
+<section id="resume">
+
+    <!-- Education
+    ----------------------------------------------- -->
+    <div class="row education">
+
+        <div class="three columns header-col">
+            <h1><span>Education</span></h1>
+        </div>
+
+        <div class="nine columns main-col">
+
+            <div class="row item">
+
+                <div class="twelve columns">
+
+                    <h3>Ramniranjan Jhunjhunwala College of Science and Commerce [University of Mumbai]    - May 2022</h3>
+                    <p class="info"><em class="date">Bachelor of Science (B.Sc.) in Statistics with C.G.P.A 9.6. </em></p>
+
+                </div>
+
+            </div> <!-- item end -->
+
+        </div> <!-- main-col end -->
+
+    </div> <!-- End Education -->
+
+
+    <!-- Work
+    ----------------------------------------------- -->
+    <div class="row work">
+
+        <div class="three columns header-col">
+            <h1><span>Projects</span></h1>
+        </div>
+
+        <div class="nine columns main-col">
+
+            <div class="row item">
+
+                <div class="twelve columns">
+
+                    <h3><a href="https://github.com/rajsalvi744/end-to-end-pipeline" target="_blank" rel="noopener noreferrer">
+                        Data Engineering Pipeline with Open-Source Tools
+                    </a></h3>
+                    <p class="info">
+                    <ul>
+                        <li>Technologies: Airbyte, MinIO S3, dbt, OpenMetadata, Metabase, Docker</li>
+                        <li>Built a scalable, automated data pipeline using Airbyte for data extraction, MinIO S3 for storage, and PostgreSQL for warehousing.</li>
+                        <li>Transformed data into analytical models with dbt and implemented OpenMetadata for governance and data lineage.</li>
+                        <li>Delivered actionable insights through Metabase visualizations; containerized the entire solution with Docker for scalability and portability.</li>
+                    </ul>
+                    </p>
+
+                </div>
+
+            </div> <!-- item end -->
+
+            <div class="row item">
+
+                <div class="twelve columns">
+
+                    <h3><a href="https://github.com/rajsalvi744/realtime-voting" target="_blank" rel="noopener noreferrer">
+                        Real-Time Election Voting System
+                    </a>
+                    </h3>
+                    <p class="info">
+                    <ul>
+                        <li>Technologies: PostgreSQL, Confluent Kafka, Apache Spark, Streamlit, Docker</li>
+                        <li>Developed a real-time voting simulation system integrating voter demographics via an API into a PostgreSQL database.</li>
+                        <li>Streamed votes using Kafka and aggregated them efficiently with Spark.</li>
+                        <li>Visualized live results through an interactive Streamlit dashboard.</li>
+                        <li>Containerized the system with Docker for scalability and seamless deployment.</li>
+                    </ul>
+                    </p>
+                </div>
+
+            </div> <!-- item end -->
+        </div> <!-- main-col end -->
+
+    </div> <!-- End Work -->
+
+    <!-- Skills Section
+ ================================================== -->
+
+    <div class="row skills">
+
+        <div class="three columns header-col">
+            <h1><span>Skills</span></h1>
+        </div>
+
+        <div class="nine columns main-col">
+            <ul class="skills-list">
+                <li class="skill-item">
+                    <span class="skill-category">Programming Languages:</span>
+                    <span class="skill-level">Python, SQL (Intermediate)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Source Control:</span>
+                    <span class="skill-level">Git, GitHub (Beginner)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Big Data Technologies:</span>
+                    <span class="skill-level">Spark, Kafka (Beginner)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Cloud Platforms:</span>
+                    <span class="skill-level">Azure (Intermediate), AWS (S3, Redshift) (Beginner)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Data Visualization:</span>
+                    <span class="skill-level">Power BI, Tableau (Intermediate)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Containerization:</span>
+                    <span class="skill-level">Docker, Kubernetes (Beginner)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Data Integration and Orchestration:</span>
+                    <span class="skill-level">Airbyte, Airflow (Beginner)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">Core Competencies:</span>
+                    <span class="skill-level">CI/CD concepts (Beginner), Data Analysis, Data Modeling, ETL Processes (Intermediate)</span>
+                </li>
+                <li class="skill-item">
+                    <span class="skill-category">CI/CD Tools:</span>
+                    <span class="skill-level">Jenkins (Beginner)</span>
+                </li>
+            </ul>
+
+        </div> <!-- end .main-col -->
+
+    </div>
+</section> <!-- Resume Section End-->
+
+<!-- footer
+================================================== -->
+<footer>
+
+    <div class="row">
+
+        <div class="twelve columns">
+
+            <ul class="social-links">
+                <li><a href="mailto:salviraj123@outlook.com"><i class="fa fa-external-link"></i></a></li>
+                <li><a href="https://linkedin.com/in/raj-salvi123"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="https://github.com/rajsalvi744"><i class="fa fa-github"></i></a></li>
+            </ul>
+
+            <ul class="copyright">
+                <a href="https://www.styleshout.com/free-templates/ceevee/"> Template by CeeVee </a>
+
+            </ul>
+
+        </div>
+
+        <div id="go-top"><a class="smoothscroll" title="Back to Top" href="#home"><i class="icon-up-open"></i></a></div>
+
+    </div>
+
+</footer> <!-- Footer End-->
+
+<!-- Java Script
+================================================== -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+
+<script src="js/jquery.flexslider.js"></script>
+<script src="js/waypoints.js"></script>
+<script src="js/jquery.fittext.js"></script>
+<script src="js/magnific-popup.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+
+</html>
