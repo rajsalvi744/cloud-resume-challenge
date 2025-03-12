@@ -1,4 +1,3 @@
-
 name: Frontend CI/CD
 
 on:
@@ -16,33 +15,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: azure/login@v2
-      with:
+      - uses: actions/checkout@v3
+
+      - uses: azure/login@v2
+        with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Upload to blob storage
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+          working-directory: frontend
+          inlineScript: |
             az storage blob upload-batch --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}" --auth-mode key -d '$web' -s .
-    - name: Purge CDN endpoint
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "${{ secrets.CDN_PROFILE }}" --name "${{ secrets.CDN_ENDPOINT }}" --resource-group "${{ secrets.RESOURCE_GROUP }}"
 
-  # Azure logout
-    - name: logout
-      run: |
-            az logout
-      if: always()
+      - name: Purge Azure CDN endpoint
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az cdn endpoint purge --content-paths "/*" --profile-name "${{ secrets.CDN_PROFILE }}" --name "${{ secrets.CDN_ENDPOINT }}" --resource-group "${{ secrets.RESOURCE_GROUP }}" --no-wait
 
-    - name: Purge cache
-      uses: jakejarvis/cloudflare-purge-action@master
-      env:
-        # Zone is required by both authentication methods
-        CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+      - name: Logout from Azure
+        run: az logout
+        if: always()
 
-        CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-
+      - name: Purge Cloudflare cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        if: success()
