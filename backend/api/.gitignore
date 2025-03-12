@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+conftest.py
 
 # Distribution / packaging
 .Python

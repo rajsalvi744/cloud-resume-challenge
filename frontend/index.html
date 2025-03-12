@@ -25,7 +25,8 @@
     <!-- Script
     ================================================== -->
     <script src="js/modernizr.js"></script>
-    <script src="scripts/vistorCounter.js"></script>
+
+    
 
     <!-- Favicons
      ================================================== -->
@@ -34,16 +35,6 @@
 </head>
 
 <body>
-
-    <form id="visitorForm" action="/submit" method="POST">
-        <button class="g-recaptcha" 
-                data-sitekey="YOUR_SITE_KEY" 
-                data-callback="onSubmit" 
-                data-size="invisible">
-            Submit
-        </button>
-    </form>
-
 <!-- Header
 ================================================== -->
 <header id="home">
@@ -65,7 +56,7 @@
         <div class="banner-text">
             <h1 class="responsive-headline">Hi, I'm Raj</h1>
 
-            <p>and this page has been viewed <a id="visitor-count"></a> times :) </p>
+            <p>and this page has been viewed <a id="visitor-count" aria-label="Current visitor count"></a> times :) </p>
             <ul class="social">
                 <li><a href="mailto:salviraj123@outlook.com"><i class="fa fa-external-link"></i></a></li>
                 <li><a href="https://linkedin.com/in/raj-salvi123"><i class="fa fa-linkedin"></i></a></li>
@@ -279,7 +270,7 @@
 
 <!-- Java Script
 ================================================== -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
 <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 
@@ -288,7 +279,8 @@
 <script src="js/jquery.fittext.js"></script>
 <script src="js/magnific-popup.js"></script>
 <script src="js/init.js"></script>
-
+<script src="scripts/visitorCounter.js"></script>
+<!-- <script src="https://alcdn.msauth.net/browser/2.24.0/js/msal-browser.min.js"></script> -->
 </body>
 
 </html>

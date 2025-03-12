@@ -1,6 +1,8 @@
 
 *.iml
-*.txt
+css.txt
+misc.txt
 .vscode
 .idea
 __*
+conftest.py
