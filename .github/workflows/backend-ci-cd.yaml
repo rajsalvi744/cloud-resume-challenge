@@ -40,18 +40,18 @@ jobs:
 
     - name: Create .env file
       run: |
-        cd backend/tests
+        cd backend/api/tests
         echo "${{ secrets.PYTEST_ENV_VARS }}" > .env
 
     - name: Run linting
       run: |
-        cd backend
+        cd backend/api
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       continue-on-error: true
 
     - name: Security scanning
       run: |
-        cd backend
+        cd backend/api
         bandit -r . -x tests
       continue-on-error: true
 
