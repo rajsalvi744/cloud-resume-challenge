@@ -1,4 +1,3 @@
-# tests/test_backend_emulator.py
 import os
 import uuid
 import logging
@@ -7,6 +6,7 @@ from dotenv import load_dotenv
 import pytest
 from azure.cosmos import CosmosClient, exceptions
 
+import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from function_app import (
     CosmosConfig,
@@ -17,7 +17,7 @@ from function_app import (
 
 load_dotenv()
 
-# Cosmos DB Emulator Configuration
+# Cosmos DB Configuration
 COSMOS_ENDPOINT = os.getenv("COSMOS_ENDPOINT", "https://localhost:8081")
 COSMOS_KEY = os.getenv("COSMOS_KEY", "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==")
 DATABASE_NAME = os.getenv("COSMOS_TEST_DATABASE")
@@ -32,39 +32,57 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture(scope="module")
 def cosmos_client():
-    """Fixture to create a Cosmos DB client for the emulator."""
+    """Fixture to create a Cosmos DB client."""
+    # Using connection_verify=True for real Cosmos DB
     client = CosmosClient(COSMOS_ENDPOINT,
                           COSMOS_KEY,
-                          connection_verify=False)
-    time.sleep(5)
+                          connection_verify=True)
     yield client
-    # # Cleanup: Delete the test database
-    # try:
-    #     client.delete_database(DATABASE_NAME)
-    #     logger.info(f"Deleted database: {DATABASE_NAME}")
-    # except exceptions.CosmosResourceNotFoundError:
-    #     logger.warning(f"Database not found: {DATABASE_NAME}")
+    # No cleanup - we're using an existing database
 
 @pytest.fixture(scope="module")
 def test_database(cosmos_client):
-    """Fixture to create a test database."""
-    database = cosmos_client.create_database_if_not_exists(id=DATABASE_NAME)
-    logger.info(f"Created database: {DATABASE_NAME}")
-    time.sleep(5)
-    yield database
-    # Cleanup is handled by the cosmos_client fixture
+    """Fixture to get the existing test database."""
+    try:
+        database = cosmos_client.get_database_client(DATABASE_NAME)
+        # Validate the database exists
+        database_properties = database.read()
+        logger.info(f"Connected to existing database: {DATABASE_NAME}")
+        yield database
+    except exceptions.CosmosResourceNotFoundError:
+        pytest.fail(f"Database {DATABASE_NAME} does not exist. Please create it before running tests.")
 
 @pytest.fixture(scope="module")
 def test_container(test_database):
-    """Fixture to create a test container."""
-    container = test_database.create_container_if_not_exists(
-        id=CONTAINER_NAME,
-        partition_key=PARTITION_KEY_PATH
-    )
-    time.sleep(5)
-    logger.info(f"Created container: {CONTAINER_NAME}")
+    """Fixture to get the existing test container or create if it doesn't exist."""
+    try:
+        container = test_database.get_container_client(CONTAINER_NAME)
+        # Validate the container exists
+        container_properties = container.read()
+        logger.info(f"Connected to existing container: {CONTAINER_NAME}")
+    except exceptions.CosmosResourceNotFoundError:
+        # Create the container if it doesn't exist
+        container = test_database.create_container_if_not_exists(
+            id=CONTAINER_NAME,
+            partition_key=PARTITION_KEY_PATH
+        )
+        logger.info(f"Created container: {CONTAINER_NAME}")
+
+    # Clear any existing test data before starting
+    try:
+        container.delete_item(item=COUNTER_ID, partition_key=PARTITION_KEY)
+        logger.info(f"Cleared existing counter with ID: {COUNTER_ID}")
+    except exceptions.CosmosResourceNotFoundError:
+        logger.info(f"No existing counter with ID: {COUNTER_ID} to clear")
+
     yield container
-    # Cleanup is handled by the test_database fixture
+
+    # Clean up test data after tests
+    try:
+        container.delete_item(item=COUNTER_ID, partition_key=PARTITION_KEY)
+        logger.info(f"Cleaned up test counter with ID: {COUNTER_ID}")
+    except exceptions.CosmosResourceNotFoundError:
+        logger.info(f"No counter to clean up with ID: {COUNTER_ID}")
 
 @pytest.fixture
 def cosmos_config():
