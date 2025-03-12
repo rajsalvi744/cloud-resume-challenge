@@ -24,9 +24,8 @@ jobs:
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
-          working-directory: frontend
           inlineScript: |
-            az storage blob upload-batch --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}" --auth-mode key -d '$web' -s .
+            az storage blob upload-batch --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}" --auth-mode key -d '$web' -s frontend --overwrite
 
       - name: Purge Azure CDN endpoint
         uses: azure/CLI@v1
