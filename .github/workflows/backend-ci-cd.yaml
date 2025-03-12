@@ -38,6 +38,9 @@ jobs:
         pip install flake8 bandit pytest  # Install missing dependencies
         popd
 
+    - name: Set Python Path
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/backend/api/.python_packages/lib/site-packages" >> $GITHUB_ENV
+
     - name: Create .env file
       run: |
         cd backend/api/tests
