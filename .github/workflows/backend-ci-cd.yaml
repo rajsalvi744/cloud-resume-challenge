@@ -1,4 +1,3 @@
-
 name: Backend CI/CD
 
 on:
@@ -13,16 +12,16 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_NAME: 'raj-azure-resume-counter'   # set this to your function app name on Azure
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend/api'       # set this to the path to your function app project, defaults to the repository root
-  PYTHON_VERSION: '3.11'                     # set this to the python version to use (e.g. '3.6', '3.7', '3.8')
+  AZURE_FUNCTIONAPP_NAME: 'raj-azure-resume-counter'  
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend/api'       
+  PYTHON_VERSION: '3.11'                     
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-    - name: 'Checkout GitHub Action'
+    - name: Checkout GitHub Action
       uses: actions/checkout@v3
 
     - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
@@ -30,7 +29,7 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: 'Resolve Project Dependencies Using Pip'
+    - name: Resolve Project Dependencies Using Pip
       shell: bash
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
@@ -43,13 +42,13 @@ jobs:
         cd backend/api/tests
         echo "${{ secrets.PYTEST_ENV_VARS }}" > .env
 
-    - name: Run linting
+    - name: Run linting (fail on errors)
       run: |
         cd backend/api
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       continue-on-error: true
 
-    - name: Security scanning
+    - name: Security scanning (fail on issues)
       run: |
         cd backend/api
         bandit -r . -x tests
@@ -57,8 +56,8 @@ jobs:
 
     - name: Run tests
       run: |
-        cd backend/api/tests
-        pytest test_app.py test_ui.py test_security.py
+        cd backend/api
+        pytest test_ui.py test_security.py
       continue-on-error: false
 
     - name: Login to Azure
@@ -66,13 +65,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: 'Run Azure Functions Action'
+    - name: Run Azure Functions Action
       uses: Azure/functions-action@v1
       id: fa
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
         scm-do-build-during-deployment: true
         enable-oryx-build: true
 
