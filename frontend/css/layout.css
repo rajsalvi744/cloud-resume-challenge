@@ -264,6 +264,8 @@ ul#nav li.current a {
 
 #about .main-col {
    padding-right: 5%;
+   flex: 1;
+   /* Takes up remaining space */
 }
 
 #about .download .button {
@@ -280,6 +282,14 @@ ul#nav li.current a {
    margin-right: 15px;
    font-size: 20px;
 }
+
+#about .row {
+   display: flex;
+   align-items: center;
+   /* Aligns image and text vertically */
+   flex-wrap: wrap;
+}
+
 
 
 /* ------------------------------------------------------------------ */
@@ -1337,12 +1347,51 @@ footer .social-links li:first-child {
    z-index: 1000;
 }
 
-img {
+/* Image stays on the left side */
+.profile-container {
+   flex: 0 0 auto;
+   /* Prevents image from growing */
+   max-width: 25%;
+   /* Adjust width as needed */
+   display: flex;
+   justify-content: flex-start;
+   padding-right: 20px;
+   /* Adds space between image and text */
+}
+
+/* Profile image styling */
+.profile-photo {
    border-radius: 50%;
    width: 100%;
    max-width: 200px;
-   /* Maximum size on larger screens */
    aspect-ratio: 1 / 1;
    object-fit: cover;
    display: block;
+}
+
+
+/* Mobile responsiveness: Center the image above the text */
+@media (max-width: 768px) {
+   #about .row {
+      flex-direction: column;
+      /* Stack image and text vertically */
+      align-items: center;
+      /* Center align content */
+      text-align: center;
+      /* Center text alignment */
+   }
+
+   .profile-container {
+      max-width: 100%;
+      /* Full width */
+      padding-right: 0;
+      /* Remove spacing */
+      margin-bottom: 15px;
+      /* Add spacing between image and text */
+   }
+
+   .profile-photo {
+      max-width: 150px;
+      /* Slightly smaller for mobile */
+   }
 }
