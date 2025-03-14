@@ -1,6 +1,6 @@
 // Configuration object with environment-specific settings
 const CONFIG = {
-  API_URL: 'http://localhost:7071/api/counter',
+  API_URL: 'https://raj-azure-resume-counter-apim.azure-api.net/raj-azure-resume-counter/counter',
   ELEMENT_ID: 'visitor-count',
   MAX_RETRIES: 3,
   RETRY_DELAY: 1000,
