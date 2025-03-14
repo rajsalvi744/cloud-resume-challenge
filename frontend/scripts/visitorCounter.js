@@ -1,10 +1,10 @@
 // Configuration object with environment-specific settings
 const CONFIG = {
-  API_URL: 'https://raj-azure-resume-counter-apim.azure-api.net/raj-azure-resume-counter/counter',
+  API_URL: 'http://localhost:7071/api/counter',
   ELEMENT_ID: 'visitor-count',
   MAX_RETRIES: 3,
   RETRY_DELAY: 1000,
-  TIMEOUT: 5000,
+  TIMEOUT: 15000,
   DEBUG: true // Enable debug logging
 };
 
@@ -48,6 +48,11 @@ class VisitorCounter {
       if (!this.isValidUrl(this.config.API_URL)) {
         throw new Error('Invalid API URL configuration');
       }
+      const visitorCountElement = document.getElementById(this.config.ELEMENT_ID);
+
+      // Initialize with loading state
+      visitorCountElement.innerHTML = '<span id="count-value">Loading...</span></span>';
+
 
       await this.incrementVisitorCount();
       await this.updateVisitorCount();
@@ -186,13 +191,15 @@ class VisitorCounter {
   }
 
   updateDOM(count) {
-    const element = document.getElementById(this.config.ELEMENT_ID);
-    if (element) {
+    localStorage.setItem('visitorCount', count.toString().replace(/[^\d]/g, ''));
+    // Get references to the inner elements
+    const countValueElement = document.getElementById('count-value');
+    if (countValueElement) {
       // Sanitize the count before insertion
-      const sanitizedCount = count.toString().replace(/[^\d]/g, '');
-      element.textContent = sanitizedCount; // Use textContent instead of innerText for better security
-      element.setAttribute('aria-label', `Visitor count: ${sanitizedCount}`);
-      this.debugLog(`DOM updated with count: ${sanitizedCount}`);
+      const cachedCount = localStorage.getItem('visitorCount');
+      countValueElement.textContent = cachedCount; // Use textContent instead of innerText for better security
+      countValueElement.setAttribute('aria-label', `Visitor count: ${cachedCount}`);
+      this.debugLog(`DOM updated with count: ${cachedCount}`);
     } else {
       this.debugLog(`Element with id ${this.config.ELEMENT_ID} not found`);
     }

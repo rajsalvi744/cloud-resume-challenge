@@ -61,7 +61,7 @@ jobs:
     - name: Run tests
       run: |
         cd backend/api/tests
-        pytest test_ui.py test_security.py
+        pytest test_api.py test_api_2.py
       continue-on-error: false
 
     - name: Login to Azure
