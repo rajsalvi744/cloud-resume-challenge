@@ -6,3 +6,4 @@ misc.txt
 .idea
 __*
 conftest.py
+.env.test

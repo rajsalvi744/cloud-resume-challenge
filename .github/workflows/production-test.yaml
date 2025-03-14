@@ -1,0 +1,47 @@
+name: Testing of Production API and Website
+
+on:
+  workflow_run:
+    workflows: ["backend-ci-cd"]  # Must match the name of Workflow A
+    types:
+      - completed
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: Checkout GitHub Action
+      uses: actions/checkout@v3
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Resolve Project Dependencies Using Pip
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        pip install flake8 bandit pytest  # Install missing dependencies
+        popd
+
+    - name: Set Python Path
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/backend/api/.python_packages/lib/site-packages" >> $GITHUB_ENV
+
+    - name: Create .env file
+      run: |
+        cd backend/api/tests
+        echo "${{ secrets.PYTEST_ENV_VARS }}" > .env
+
+    - name: Run tests
+      run: |
+        cd backend/api/tests
+        pytest test_ui.py test_security.py
+      continue-on-error: false
