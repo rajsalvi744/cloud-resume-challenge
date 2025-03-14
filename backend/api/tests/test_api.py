@@ -47,12 +47,12 @@ def setup_test_infrastructure():
 
     yield  # Test session teardown
 
-    # Cleanup only if CI environment
-    if os.getenv("CI") == "true":
-        try:
-            client.delete_database(TEST_DATABASE)
-        except exceptions.CosmosResourceNotFoundError:
-            pass
+    # # Cleanup only if CI environment
+    # if os.getenv("CI") == "true":
+    #     try:
+    #         client.delete_database(TEST_DATABASE)
+    #     except exceptions.CosmosResourceNotFoundError:
+    #         pass
 
 @pytest.fixture(autouse=True)
 def mock_logging(monkeypatch):
