@@ -86,8 +86,8 @@ class TestCosmosConfig(unittest.TestCase):
         config = CosmosConfig.from_env()
         self.assertEqual(config.endpoint, "https://example.cosmos.azure.com")
         self.assertEqual(config.key, "valid-key")
-        self.assertEqual(config.database_name, "AzureResume")
-        self.assertEqual(config.container_name, "VisitorCounter")
+        self.assertEqual(config.database_name, "TestDatabase")
+        self.assertEqual(config.container_name, "TestContainer")
         self.assertEqual(config.partition_key, "visitorCount")
         self.assertEqual(config.counter_id, "visitorCount")
 
@@ -109,8 +109,9 @@ class TestCosmosConfig(unittest.TestCase):
         self.assertEqual(config.partition_key, "TestPartition")
         self.assertEqual(config.counter_id, "TestCounter")
 
-    @mock.patch.dict(os.environ, {})
+    @mock.patch.dict(os.environ, {}, clear=True)
     def test_from_env_missing_vars(self):
+        print(os.environ)
         """Test error when required environment variables are missing"""
         with self.assertRaises(ValueError):
             CosmosConfig.from_env()
