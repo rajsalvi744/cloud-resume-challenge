@@ -21,7 +21,7 @@ from function_app import (
 # Constants for test environment
 TEST_DATABASE = "TestDatabase"
 TEST_CONTAINER = "TestContainer"
-ENV_FILE = ".env.test"
+ENV_FILE = ".env"
 
 @pytest.fixture(scope="session", autouse=True)
 def load_env():
