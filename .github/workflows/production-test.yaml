@@ -37,5 +37,5 @@ jobs:
     - name: Run tests
       run: |
         cd backend/api/tests
-        pytest test_ui.py test_security.py
+        python -m pytest test_ui.py test_security.py
       continue-on-error: false
