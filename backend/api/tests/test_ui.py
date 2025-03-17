@@ -37,21 +37,24 @@ class TestVisitorCounter:
         yield
         self.driver.quit()
     def test_visitor_counter_initial_load(self):
-        """Fix for empty counter value"""
+        """Fix for empty counter value and handle loading state"""
         self.driver.get(BASE_URL)
         try:
-            # Wait for the counter to have a non-empty value
-            def counter_has_value(driver):
+            # Wait for the counter to contain a valid number
+            def counter_has_valid_number(driver):
                 element = driver.find_element(By.ID, "visitor-count")
-                return element.text.strip() != ''
-
-            self.wait.until(counter_has_value)
+                text = element.text.strip()
+                return text.isdigit()  # Only return True if the text is a number
+    
+            self.wait.until(counter_has_valid_number)  # Wait until the counter contains a valid number
+    
             counter_element = self.driver.find_element(By.ID, "visitor-count")
             assert counter_element.is_displayed()
             count = counter_element.text.strip()
             assert count.isdigit(), f"Counter value '{count}' is not a number"
         except Exception as e:
             pytest.fail(f"Counter not loaded properly: {str(e)}")
+
 
     def test_counter_increment(self):
         """Fix for empty counter value in increment test"""
